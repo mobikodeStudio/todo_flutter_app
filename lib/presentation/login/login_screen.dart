@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:untitled5/presentation/widgets/to_do_primary_button.dart';
+import 'package:untitled5/presentation/widgets/to_do_text.dart';
+import 'package:untitled5/presentation/widgets/to_do_text_field.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -20,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const SizedBox(height: 100),
             Center(child: Image.asset('assets/images/todo.jpg')),
             const SizedBox(height: 20),
             const Center(
@@ -34,66 +38,34 @@ class _LoginPageState extends State<LoginPage> {
             ),
             const SizedBox(height: 10),
             const Center(
-              child: Text(
-                'Sign in to continue',
-                style: TextStyle(fontSize: 15, color: Colors.black),
-              ),
+              child: ToDoText(label: 'Sign in to continue', color: Colors.black,),
             ),
             const SizedBox(height: 30),
-            const Text(
-              'Email',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 5),
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                hintText: 'Enter your Email',
-                hintStyle: const TextStyle(color: Colors.grey),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
-            ),
-            const SizedBox(height: 5),
-            const Text(
-              'Password',
-              style: TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(height: 5),
-            TextField(
+            ToDoTextField(controller: emailController, textLabel: 'Email', textHintLabel: 'Enter your Email',isSuffixIconVisible: false,),
+
+            const SizedBox(height: 20),
+            ToDoTextField(
               controller: passwordController,
+              textLabel: 'Password',
+              textHintLabel: 'Enter your password',
+              isSuffixIconVisible: true,
               obscureText: _obscurePassword,
-              decoration: InputDecoration(
-                hintText: 'Enter your Password',
-                hintStyle: const TextStyle(color: Colors.grey),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                suffixIcon: IconButton(
-                  icon: Icon(
-                    _obscurePassword ? Icons.visibility_off : Icons.visibility,
-                    color: Colors.grey,
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      _obscurePassword = !_obscurePassword;
-                    });
-                  },
-                ),
-              ),
+              suffixIcon:
+              _obscurePassword ? Icons.visibility_off : Icons.visibility,
+              suffixOnClick: () {
+                setState(() {
+                  _obscurePassword = !_obscurePassword;
+                });
+              },
             ),
+            SizedBox(height: 30),
+            ToDoPrimaryButton(label: 'Sign In', onPressed: () {  },isEnabled: true,),
+
           ],
         ),
       ),
     );
   }
 }
+
+
