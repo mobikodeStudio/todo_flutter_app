@@ -3,16 +3,19 @@ import 'package:flutter/material.dart';
 class ToDoText extends StatelessWidget {
   final String label;
   final Color color;
+  final TextAlign textAlign;
   const ToDoText({
     super.key,
     required this.label,
-    required this.color
+    required this.color,
+    this.textAlign = TextAlign.right,
   });
 
   @override
   Widget build(BuildContext context) {
     return Text(
       label,
+      textAlign: textAlign,
       style: TextStyle(fontSize: 15, color: color),
     );
   }
