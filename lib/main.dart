@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:untitled5/presentation/signup/signup_screen.dart';
 import 'package:untitled5/presentation/splash/splash_screen.dart';
 
 void main() {
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: const Splash(
+      home: const SignupScreen(
       ),
     );
   }
