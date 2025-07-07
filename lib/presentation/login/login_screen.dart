@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_flutter_app/core/injector.dart';
 import 'package:todo_flutter_app/presentation/login/bloc/login_bloc.dart';
-// import 'package:todo_flutter_app/presentation/login/bloc/signin_bloc.dart';
-// import 'package:todo_flutter_app/presentation/login/signin_screen.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_primary_button.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_text.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_text_field.dart';
@@ -28,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
-          if (state is OnSigninBtnClickState) {
+          if (state is OnSignInBtnClickState) {
             // Navigator.of(context).push(
             //   MaterialPageRoute(
             //     builder: (context) => BlocProvider(
@@ -70,6 +68,28 @@ class _LoginPageState extends State<LoginPage> {
                 textLabel: 'Email',
                 textHintLabel: 'Enter your Email',
                 isSuffixIconVisible: false,
+                onChanged: (value) {
+                  getIt<LoginBloc>().add(OnTextChangeEvent(
+                      email: value, password: passwordController.text));
+                },
+              ),
+              const SizedBox(height: 3),
+              BlocBuilder<LoginBloc, LoginState>(
+                builder: (context, state) {
+                  if(state is LoginEmailErrorState){
+                    return Text(
+                    'Not a valid email',
+                    style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.normal,
+                  color: Colors.red,
+                  ),
+                  );
+                  }else{
+                  return SizedBox.shrink();
+                  }
+
+                },
               ),
               const SizedBox(height: 20),
               ToDoTextField(
@@ -86,38 +106,56 @@ class _LoginPageState extends State<LoginPage> {
                     _obscurePassword = !_obscurePassword;
                   });
                 },
+                onChanged: (value) {
+                  getIt<LoginBloc>().add(OnTextChangeEvent(
+                      email: emailController.text, password: value));
+                },
               ),
               const SizedBox(height: 10),
-              const Center(
+              Align(
+                alignment: Alignment.centerRight,
                 child: ToDoText(
                   label: 'Forget Password?',
-                  color: Colors.blue,
+                  color: Colors.blueAccent,
                   textAlign: TextAlign.right,
                 ),
               ),
-              const SizedBox(height: 16),
-              Center(
-                child: ToDoPrimaryButton(
-                  label: 'Sign In',
-                  onPressed: () {
-                    getIt<LoginBloc>().add(OnSigninBtnClickEvent());
-                  },
-                ),
+              const SizedBox(height: 24),
+              BlocBuilder<LoginBloc, LoginState>(
+                builder: (context, state) {
+                  if (state is OnSignInOnLoadState) {
+                    return Center(
+                      child: ToDoPrimaryButton(
+                        isEnabled: state.isBtnEnabled,
+                        label: 'Sign In',
+                        onPressed: () {
+                          getIt<LoginBloc>().add(OnSignInBtnClickEvent());
+                        },
+                      ),
+                    );
+                  }
+                  else {
+                    return SizedBox.shrink();
+                  }
+                },
+
               ),
               SizedBox(height: 20),
-              RichText(
-                text: TextSpan(
-                  text: "Don't have an account? ",
-                  style: const TextStyle(color: Colors.black),
-                  children: const <TextSpan>[
-                    TextSpan(
-                      text: 'Sign Up',
-                      style: TextStyle(
-                        color: Colors.blue,
-                        fontWeight: FontWeight.bold,
+              Center(
+                child: RichText(
+                  text: TextSpan(
+                    text: "Don't have an account? ",
+                    style: const TextStyle(color: Colors.black),
+                    children: const <TextSpan>[
+                      TextSpan(
+                        text: 'Sign Up',
+                        style: TextStyle(
+                          color: Colors.blue,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ],

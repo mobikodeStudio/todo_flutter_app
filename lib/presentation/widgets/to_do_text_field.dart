@@ -8,6 +8,7 @@ class ToDoTextField extends StatelessWidget {
   final IconData? suffixIcon;
   final VoidCallback? suffixOnClick;
   final bool obscureText;
+  final ValueChanged<String>? onChanged;
 
   const ToDoTextField({
     super.key,
@@ -17,6 +18,7 @@ class ToDoTextField extends StatelessWidget {
     this.isSuffixIconVisible = false,
     this.suffixIcon,
     this.suffixOnClick,
+    this.onChanged,
     this.obscureText = false,
   });
 
@@ -41,6 +43,7 @@ class ToDoTextField extends StatelessWidget {
         TextField(
           controller: controller,
           obscureText: shouldObscureText,
+          onChanged: onChanged,
           decoration: InputDecoration(
             hintText: textHintLabel,
             hintStyle: const TextStyle(color: Colors.grey),
