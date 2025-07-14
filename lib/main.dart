@@ -5,8 +5,11 @@ import 'package:todo_flutter_app/presentation/add_task/add_task.dart';
 import 'package:todo_flutter_app/presentation/add_task/add_task_bloc.dart';
 import 'package:todo_flutter_app/presentation/login/bloc/login_bloc.dart';
 import 'package:todo_flutter_app/presentation/login/login_screen.dart';
+import 'package:todo_flutter_app/presentation/splash/splash_bloc.dart';
+import 'package:todo_flutter_app/presentation/splash/splash_screen.dart';
 
 void main() {
+  serviceInjector();
   runApp(const MyApp());
 }
 
@@ -19,8 +22,8 @@ class MyApp extends StatelessWidget {
       title: 'Todo Bloc App',
       theme: ThemeData(primarySwatch: Colors.blue),
       home: BlocProvider(
-        create: (_) => getIt<LoginBloc>(),
-        child: const LoginPage(),
+        create: (_) => getIt<SplashBloc>()..add(InitialSplashLOadEvent()),
+        child: const Splash(),
       ),
     );
   }
