@@ -14,9 +14,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   }
 
   FutureOr<void> onTextChange(OnTextChangeEvent event, Emitter<LoginState> emit) {
-     bool isBtnEnabled = event.email.isNotEmpty && event.password.isNotEmpty && event.password.length>3;
+     bool isBtnEnabled = event.email.isNotEmpty &&
+         event.password.isNotEmpty &&
+         event.password.length>3;
      bool isEmailValid = validEmailRegex.hasMatch(event.email);
-     if(isEmailValid){
+     if(isEmailValid && isBtnEnabled){
        emit(OnSignInOnLoadState(isBtnEnabled: isBtnEnabled));
      }
      else{

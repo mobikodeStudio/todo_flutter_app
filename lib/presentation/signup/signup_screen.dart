@@ -7,6 +7,11 @@ import 'package:todo_flutter_app/presentation/widgets/to_do_text.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_text_field.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_primary_button.dart';
 
+import '../../core/injector.dart';
+import '../login/bloc/login_bloc.dart';
+import '../login/bloc/login_event.dart';
+import '../login/login_screen.dart';
+
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
@@ -165,7 +170,14 @@ class _SignupScreenState extends State<SignupScreen> {
                       const Text("Already have an account? "),
                       GestureDetector(
                         onTap: () {
-                          Navigator.pop(context); // or push LoginPage
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => BlocProvider(
+                                create: (context) => getIt<LoginBloc>()..add(OnSignInOnLoadEvent()),
+                                child: const LoginPage (),
+                              ),
+                            ),
+                          );
                         },
                         child: const Text(
                           "Log in",

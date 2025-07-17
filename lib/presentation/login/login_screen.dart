@@ -81,26 +81,29 @@ class _LoginPageState extends State<LoginPage> {
                 textHintLabel: 'Enter your Email',
                 isSuffixIconVisible: false,
                 onChanged: (value) {
-                  getIt<LoginBloc>().add(OnTextChangeEvent(
-                      email: value, password: passwordController.text));
+                  context.read<LoginBloc>().add(
+                    OnTextChangeEvent(
+                      email: value,
+                      password: passwordController.text,
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 3),
               BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {
-                  if(state is LoginEmailErrorState){
+                  if (state is LoginEmailErrorState) {
                     return Text(
-                    'Not a valid email',
-                    style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.red,
-                  ),
-                  );
-                  }else{
-                  return SizedBox.shrink();
+                      'Not a valid email',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.red,
+                      ),
+                    );
+                  } else {
+                    return SizedBox.shrink();
                   }
-
                 },
               ),
               const SizedBox(height: 20),
@@ -119,8 +122,12 @@ class _LoginPageState extends State<LoginPage> {
                   });
                 },
                 onChanged: (value) {
-                  getIt<LoginBloc>().add(OnTextChangeEvent(
-                      email: emailController.text, password: value));
+                  context.read<LoginBloc>().add(
+                    OnTextChangeEvent(
+                      email: emailController.text,
+                      password: value,
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 10),
@@ -135,38 +142,41 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 24),
               BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {
-                  if (state is OnSignInOnLoadState) {
+                  if (state is OnSignInOnLoadState || state is LoginEmailErrorState) {
                     return Center(
                       child: ToDoPrimaryButton(
                         isEnabled: state.isBtnEnabled,
-                        label: 'Sign Up',
+                        label: 'Sign In',
                         onPressed: () {
-                          getIt<LoginBloc>().add(OnSignUpOnClickEvent());
+                          context.read<LoginBloc>().add(OnSignInBtnClickEvent());
                         },
                       ),
                     );
-                  }
-                  else {
+                  } else {
                     return SizedBox.shrink();
                   }
                 },
-
               ),
               SizedBox(height: 20),
               Center(
-                child: RichText(
-                  text: TextSpan(
-                    text: "Don't have an account? ",
-                    style: const TextStyle(color: Colors.black),
-                    children: const <TextSpan>[
-                      TextSpan(
-                        text: 'Sign Up',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
+                child: GestureDetector(
+                  onTap: () {
+                    context.read<LoginBloc>().add(OnSignUpOnClickEvent());
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      text: "Don't have an account? ",
+                      style: const TextStyle(color: Colors.black),
+                      children: const <TextSpan>[
+                        TextSpan(
+                          text: 'Sign Up',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
