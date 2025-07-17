@@ -4,13 +4,11 @@ class ToDoText extends StatelessWidget {
   final String label;
   final Color color;
   final TextAlign textAlign;
-  final FontWeight fontWeight;
   const ToDoText({
     super.key,
     required this.label,
     required this.color,
     this.textAlign = TextAlign.right,
-    required this.fontWeight,
   });
 
   @override

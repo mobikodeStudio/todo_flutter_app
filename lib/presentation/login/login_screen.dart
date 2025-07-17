@@ -6,6 +6,8 @@ import 'package:todo_flutter_app/presentation/widgets/to_do_primary_button.dart'
 import 'package:todo_flutter_app/presentation/widgets/to_do_text.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_text_field.dart';
 
+import '../signup/bloc/signup_bloc.dart';
+import '../signup/signup_screen.dart';
 import 'bloc/login_event.dart';
 import 'bloc/login_state.dart';
 
@@ -27,14 +29,24 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is OnSignInBtnClickState) {
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => BlocProvider(
-            //       create: (context) => getIt<SigninBloc>(),
-            //       child: const Signin_Screen(),
-            //     ),
-            //   ),
-            // );
+            /* Navigator.of(context).push(
+              MaterialPageRoute(
+                 builder: (context) => BlocProvider(
+                create: (context) => getIt<SignupBloc>(),
+                 child: const SignupScreen(),
+             ),
+              ),
+             );*/
+          }
+          if (state is OnSignUpOnClickState) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (context) => getIt<SignupBloc>(),
+                  child: const SignupScreen(),
+                ),
+              ),
+            );
           }
         },
         child: Padding(
@@ -60,7 +72,6 @@ class _LoginPageState extends State<LoginPage> {
                 child: ToDoText(
                   label: 'Sign in to continue',
                   color: Colors.black,
-                  fontWeight: FontWeight.normal,
                 ),
               ),
               const SizedBox(height: 30),
@@ -70,7 +81,7 @@ class _LoginPageState extends State<LoginPage> {
                 textHintLabel: 'Enter your Email',
                 isSuffixIconVisible: false,
                 onChanged: (value) {
-                  getIt<LoginBloc>().add(
+                  context.read<LoginBloc>().add(
                     OnTextChangeEvent(
                       email: value,
                       password: passwordController.text,
@@ -111,7 +122,7 @@ class _LoginPageState extends State<LoginPage> {
                   });
                 },
                 onChanged: (value) {
-                  getIt<LoginBloc>().add(
+                  context.read<LoginBloc>().add(
                     OnTextChangeEvent(
                       email: emailController.text,
                       password: value,
@@ -126,19 +137,18 @@ class _LoginPageState extends State<LoginPage> {
                   label: 'Forget Password?',
                   color: Colors.blueAccent,
                   textAlign: TextAlign.right,
-                  fontWeight: FontWeight.normal,
                 ),
               ),
               const SizedBox(height: 24),
               BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {
-                  if (state is OnSignInOnLoadState) {
+                  if (state is OnSignInOnLoadState || state is LoginEmailErrorState) {
                     return Center(
                       child: ToDoPrimaryButton(
                         isEnabled: state.isBtnEnabled,
                         label: 'Sign In',
                         onPressed: () {
-                          getIt<LoginBloc>().add(OnSignInBtnClickEvent());
+                          context.read<LoginBloc>().add(OnSignInBtnClickEvent());
                         },
                       ),
                     );
@@ -149,19 +159,24 @@ class _LoginPageState extends State<LoginPage> {
               ),
               SizedBox(height: 20),
               Center(
-                child: RichText(
-                  text: TextSpan(
-                    text: "Don't have an account? ",
-                    style: const TextStyle(color: Colors.black),
-                    children: const <TextSpan>[
-                      TextSpan(
-                        text: 'Sign Up',
-                        style: TextStyle(
-                          color: Colors.blue,
-                          fontWeight: FontWeight.bold,
+                child: GestureDetector(
+                  onTap: () {
+                    context.read<LoginBloc>().add(OnSignUpOnClickEvent());
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      text: "Don't have an account? ",
+                      style: const TextStyle(color: Colors.black),
+                      children: const <TextSpan>[
+                        TextSpan(
+                          text: 'Sign Up',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

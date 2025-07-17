@@ -2,6 +2,8 @@ abstract class LoginEvent {}
 
 class OnSignInInitialEvent extends LoginEvent {}
 class OnSignInOnLoadEvent extends LoginEvent {}
+class OnSignUpOnClickEvent extends LoginEvent {}
+
 
 class OnSignInBtnClickEvent extends LoginEvent {}
 

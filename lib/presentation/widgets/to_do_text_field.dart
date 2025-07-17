@@ -9,6 +9,7 @@ class ToDoTextField extends StatelessWidget {
   final VoidCallback? suffixOnClick;
   final bool obscureText;
   final ValueChanged<String>? onChanged;
+  final TextInputType? keyboardType;
 
   const ToDoTextField({
     super.key,
@@ -20,6 +21,7 @@ class ToDoTextField extends StatelessWidget {
     this.suffixOnClick,
     this.onChanged,
     this.obscureText = false,
+    this.keyboardType,
   });
 
   @override
