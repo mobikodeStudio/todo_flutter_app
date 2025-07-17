@@ -6,6 +6,8 @@ import 'package:todo_flutter_app/presentation/widgets/to_do_primary_button.dart'
 import 'package:todo_flutter_app/presentation/widgets/to_do_text.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_text_field.dart';
 
+import '../signup/bloc/signup_bloc.dart';
+import '../signup/signup_screen.dart';
 import 'bloc/login_event.dart';
 import 'bloc/login_state.dart';
 
@@ -27,14 +29,24 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is OnSignInBtnClickState) {
-            // Navigator.of(context).push(
-            //   MaterialPageRoute(
-            //     builder: (context) => BlocProvider(
-            //       create: (context) => getIt<SigninBloc>(),
-            //       child: const Signin_Screen(),
-            //     ),
-            //   ),
-            // );
+            /* Navigator.of(context).push(
+              MaterialPageRoute(
+                 builder: (context) => BlocProvider(
+                create: (context) => getIt<SignupBloc>(),
+                 child: const SignupScreen(),
+             ),
+              ),
+             );*/
+          }
+          if (state is OnSignUpOnClickState) {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (context) => getIt<SignupBloc>(),
+                  child: const SignupScreen(),
+                ),
+              ),
+            );
           }
         },
         child: Padding(
@@ -127,9 +139,9 @@ class _LoginPageState extends State<LoginPage> {
                     return Center(
                       child: ToDoPrimaryButton(
                         isEnabled: state.isBtnEnabled,
-                        label: 'Sign In',
+                        label: 'Sign Up',
                         onPressed: () {
-                          getIt<LoginBloc>().add(OnSignInBtnClickEvent());
+                          getIt<LoginBloc>().add(OnSignUpOnClickEvent());
                         },
                       ),
                     );

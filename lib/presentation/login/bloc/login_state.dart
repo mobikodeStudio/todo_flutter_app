@@ -19,4 +19,9 @@ class OnSignInOnLoadState extends LoginState {
 
 class OnSignInBtnClickState extends LoginState {
   const OnSignInBtnClickState() : super(isBtnEnabled: false);
+
+}
+class OnSignUpOnClickState extends LoginState{
+  const OnSignUpOnClickState () : super(isBtnEnabled: false);
+
 }
