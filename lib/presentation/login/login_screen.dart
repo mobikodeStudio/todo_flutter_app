@@ -72,6 +72,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: ToDoText(
                   label: 'Sign in to continue',
                   color: Colors.black,
+                  fontSize: 15,
                 ),
               ),
               const SizedBox(height: 30),
@@ -137,18 +138,22 @@ class _LoginPageState extends State<LoginPage> {
                   label: 'Forget Password?',
                   color: Colors.blueAccent,
                   textAlign: TextAlign.right,
+                  fontSize: 15,
                 ),
               ),
               const SizedBox(height: 24),
               BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {
-                  if (state is OnSignInOnLoadState || state is LoginEmailErrorState) {
+                  if (state is OnSignInOnLoadState ||
+                      state is LoginEmailErrorState) {
                     return Center(
                       child: ToDoPrimaryButton(
                         isEnabled: state.isBtnEnabled,
                         label: 'Sign In',
                         onPressed: () {
-                          context.read<LoginBloc>().add(OnSignInBtnClickEvent());
+                          context.read<LoginBloc>().add(
+                            OnSignInBtnClickEvent(),
+                          );
                         },
                       ),
                     );

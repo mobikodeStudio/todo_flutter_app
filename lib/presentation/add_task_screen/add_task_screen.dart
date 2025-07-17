@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todo_flutter_app/presentation/widgets/to_do_drop_down_button.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_primary_button.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_switch_list_tile.dart';
 import '../widgets/to_do_text.dart';
@@ -30,6 +29,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             label: 'Add New Task',
             color: Colors.black,
             fontWeight: FontWeight.bold,
+            fontSize: 15,
           ),
         ),
         actions: [
@@ -67,6 +67,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               label: 'Due Date & Time',
               color: Colors.black,
               fontWeight: FontWeight.normal,
+              fontSize: 15,
             ),
             const SizedBox(height: 40),
             ToDoTextField(
@@ -75,9 +76,9 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
               textHintLabel: 'No',
             ),
             const SizedBox(height: 20),
-            ToDoSwitchTile(title: 'Set Remainder', value: , onChanged: onChanged),
+            // ToDoSwitchTile(title: 'Set Remainder', value: , onChanged: onChanged),
             const SizedBox(height: 20),
-            ToDoPrimaryButton(label: 'Create Task', onPressed: onPressed)
+            // ToDoPrimaryButton(label: 'Create Task', onPressed: onPressed)
           ],
         ),
       ),

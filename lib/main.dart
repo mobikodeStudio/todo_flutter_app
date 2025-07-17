@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_flutter_app/core/injector.dart';
-import 'package:todo_flutter_app/presentation/add_task/add_task.dart';
-import 'package:todo_flutter_app/presentation/add_task/add_task_bloc.dart';
+
 import 'package:todo_flutter_app/presentation/login/bloc/login_bloc.dart';
 import 'package:todo_flutter_app/presentation/login/login_screen.dart';
 import 'package:todo_flutter_app/presentation/signup/bloc/signup_bloc.dart';
@@ -22,9 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Todo Bloc App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue),
       // Wrapping SignupScreen with BlocProvider
       home: BlocProvider(
         create: (_) => getIt<SplashBloc>()..add(InitialSplashLOadEvent()),
