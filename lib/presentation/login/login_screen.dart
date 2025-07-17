@@ -60,6 +60,7 @@ class _LoginPageState extends State<LoginPage> {
                 child: ToDoText(
                   label: 'Sign in to continue',
                   color: Colors.black,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
               const SizedBox(height: 30),
@@ -69,26 +70,29 @@ class _LoginPageState extends State<LoginPage> {
                 textHintLabel: 'Enter your Email',
                 isSuffixIconVisible: false,
                 onChanged: (value) {
-                  getIt<LoginBloc>().add(OnTextChangeEvent(
-                      email: value, password: passwordController.text));
+                  getIt<LoginBloc>().add(
+                    OnTextChangeEvent(
+                      email: value,
+                      password: passwordController.text,
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 3),
               BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {
-                  if(state is LoginEmailErrorState){
+                  if (state is LoginEmailErrorState) {
                     return Text(
-                    'Not a valid email',
-                    style: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.normal,
-                  color: Colors.red,
-                  ),
-                  );
-                  }else{
-                  return SizedBox.shrink();
+                      'Not a valid email',
+                      style: const TextStyle(
+                        fontSize: 12,
+                        fontWeight: FontWeight.normal,
+                        color: Colors.red,
+                      ),
+                    );
+                  } else {
+                    return SizedBox.shrink();
                   }
-
                 },
               ),
               const SizedBox(height: 20),
@@ -107,8 +111,12 @@ class _LoginPageState extends State<LoginPage> {
                   });
                 },
                 onChanged: (value) {
-                  getIt<LoginBloc>().add(OnTextChangeEvent(
-                      email: emailController.text, password: value));
+                  getIt<LoginBloc>().add(
+                    OnTextChangeEvent(
+                      email: emailController.text,
+                      password: value,
+                    ),
+                  );
                 },
               ),
               const SizedBox(height: 10),
@@ -118,6 +126,7 @@ class _LoginPageState extends State<LoginPage> {
                   label: 'Forget Password?',
                   color: Colors.blueAccent,
                   textAlign: TextAlign.right,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
               const SizedBox(height: 24),
@@ -133,12 +142,10 @@ class _LoginPageState extends State<LoginPage> {
                         },
                       ),
                     );
-                  }
-                  else {
+                  } else {
                     return SizedBox.shrink();
                   }
                 },
-
               ),
               SizedBox(height: 20),
               Center(
