@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
       ),
       // Wrapping SignupScreen with BlocProvider
       home: BlocProvider(
-        create: (_) => getIt<SignupBloc>(),
-        child: const SignupScreen(),
+        create: (_) => getIt<SplashBloc>()..add(InitialSplashLOadEvent()),
+        child: const Splash(),
       ),
     );
   }

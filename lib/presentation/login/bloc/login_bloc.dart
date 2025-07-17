@@ -10,6 +10,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     on<OnSignInBtnClickEvent>(onSignInBtnClick);
     on<OnSignInOnLoadEvent>(onSignInOnLoad);
     on<OnTextChangeEvent>(onTextChange);
+    on<OnSignUpOnClickEvent>(onSignUpClick);
   }
 
   FutureOr<void> onTextChange(OnTextChangeEvent event, Emitter<LoginState> emit) {
@@ -33,5 +34,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   FutureOr<void> onSignInOnLoad(OnSignInOnLoadEvent event, Emitter<LoginState> emit) {
     emit(OnSignInOnLoadState(isBtnEnabled: false));
+  }
+
+  FutureOr<void> onSignUpClick(OnSignUpOnClickEvent event, Emitter<LoginState> emit) {
+    emit(OnSignUpOnClickState());
   }
 }
