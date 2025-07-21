@@ -2,27 +2,29 @@ import 'package:flutter/material.dart';
 
 class ToDoSwitchTile extends StatelessWidget {
   final String title;
-  final String? subtitle;
   final bool value;
   final ValueChanged<bool>? onChanged;
 
   const ToDoSwitchTile({
-    Key? key,
+    super.key,
     required this.title,
-    this.subtitle,
     required this.value,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return SwitchListTile(
-      title: Text(title, style: const TextStyle(fontWeight: FontWeight.bold)),
-      subtitle: subtitle != null ? Text(subtitle!) : null,
+      title: title.isNotEmpty
+          ? Text(
+              title,
+              style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+            )
+          : null,
       value: value,
       onChanged: onChanged,
       activeColor: Theme.of(context).colorScheme.primary,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 16),
+      contentPadding: const EdgeInsets.symmetric(horizontal: 8),
     );
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_flutter_app/core/injector.dart';
+import 'package:todo_flutter_app/presentation/add_task_screen/add_task_screen.dart';
+import 'package:todo_flutter_app/presentation/add_task_screen/bloc/add_task_screen_bloc.dart';
 
 import 'package:todo_flutter_app/presentation/login/bloc/login_bloc.dart';
 import 'package:todo_flutter_app/presentation/login/login_screen.dart';
@@ -24,8 +26,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(primarySwatch: Colors.blue),
       // Wrapping SignupScreen with BlocProvider
       home: BlocProvider(
-        create: (_) => getIt<SplashBloc>()..add(InitialSplashLOadEvent()),
-        child: const Splash(),
+        create: (context) => AddTaskScreenBloc(),
+        child: const AddTaskScreen(),
       ),
     );
   }
