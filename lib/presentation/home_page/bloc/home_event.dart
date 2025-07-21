@@ -3,6 +3,10 @@ class HomeTabChanged extends HomeEvent{
   final int selectedIndex;
   HomeTabChanged(this.selectedIndex);
 }
+class HomeInitialEvent extends HomeEvent{
+  final int selectedIndex;
+  HomeInitialEvent({required this.selectedIndex});
+}
 class LoadTasks extends HomeEvent {}
 
 class ToggleTaskStatus extends HomeEvent {

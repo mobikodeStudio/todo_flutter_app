@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../../core/secure_data_storage.dart';
+import '../../../core/secure_storage_keys.dart';
 import '../../common/regex.dart';
 import 'login_event.dart';
 import 'login_state.dart';
@@ -8,6 +10,8 @@ import 'login_state.dart';
 
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
+  String? email;
+  String? password;
   LoginBloc() : super(LoginInitial()) {
     on<OnSignInBtnClickEvent>(onSignInBtnClick);
     on<OnSignInOnLoadEvent>(onSignInOnLoad);
@@ -20,6 +24,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
          event.password.isNotEmpty &&
          event.password.length>3;
      bool isEmailValid = validEmailRegex.hasMatch(event.email);
+     email =event.email;
+     password = event.password;
      if(isEmailValid && isBtnEnabled){
        emit(OnSignInOnLoadState(isBtnEnabled: isBtnEnabled));
      }
@@ -32,6 +38,11 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   FutureOr<void> onSignInBtnClick(OnSignInBtnClickEvent event, Emitter<LoginState> emit) {
 
+    if(email!= null && password!=null){
+      insetData(emailKey,email!);
+      insetData(passwordKey,password!);
+    }
+
     emit(OnSignInBtnClickState());
   }
 
@@ -40,7 +51,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     emit(OnSignInOnLoadState(isBtnEnabled: false));
   }
 
-  FutureOr<void> onSignUpClick(OnSignUpOnClickEvent event, Emitter<LoginState> emit) {
-    emit(OnSignUpOnClickState());
-  }
+  FutureOr<void> onSignUpClick(OnSignUpOnClickEvent event, Emitter<LoginState> emit){
+
+      emit(OnSignUpOnClickState());
+    }
+
 }

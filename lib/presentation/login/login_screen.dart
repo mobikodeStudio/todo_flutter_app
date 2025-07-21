@@ -7,6 +7,7 @@ import 'package:todo_flutter_app/presentation/widgets/to_do_text.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_text_field.dart';
 
 import '../home_page/bloc/home_bloc.dart';
+import '../home_page/bloc/home_event.dart';
 import '../home_page/home_page.dart';
 import '../signup/bloc/signup_bloc.dart';
 import '../signup/signup_screen.dart';
@@ -31,14 +32,14 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocListener<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is OnSignInBtnClickState) {
-            /* Navigator.of(context).push(
+             Navigator.of(context).push(
               MaterialPageRoute(
                  builder: (context) => BlocProvider(
-                create: (context) => getIt<SignupBloc>(),
-                 child: const SignupScreen(),
+                create: (context) => getIt<HomeBloc>()..add(HomeInitialEvent(selectedIndex: 0)),
+                 child: const HomeScreen(),
              ),
               ),
-             );*/
+             );
           }
           if (state is OnSignUpOnClickState) {
             Navigator.of(context).push(
@@ -49,20 +50,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
             );
-          }
-          else if (state is LoginSuccess) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Login Successful')),
-            );
-            Navigator.of(context).pushReplacement(
-              MaterialPageRoute(
-                builder: (context) => BlocProvider(
-                  create: (context) => HomeBloc(),
-                  child: const HomeScreen(),
-                ),
-              ),
-            );
-
           }
           if (state is LoginError) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -166,7 +153,7 @@ class _LoginPageState extends State<LoginPage> {
               BlocBuilder<LoginBloc, LoginState>(
                 builder: (context, state) {
                   if (state is OnSignInOnLoadState ||
-                      state is LoginEmailErrorState) {
+                      state is LoginEmailErrorState || state is OnSignInBtnClickState) {
                     return Center(
                       child: ToDoPrimaryButton(
                         isEnabled: state.isBtnEnabled,

@@ -8,6 +8,7 @@ class ToDoTextField extends StatelessWidget {
   final IconData? suffixIcon;
   final VoidCallback? suffixOnClick;
   final bool obscureText;
+  final int maxLine;
   final ValueChanged<String>? onChanged;
   final TextInputType? keyboardType;
 
@@ -22,6 +23,7 @@ class ToDoTextField extends StatelessWidget {
     this.onChanged,
     this.obscureText = false,
     this.keyboardType,
+    this.maxLine = 1,
   });
 
   @override
@@ -46,6 +48,7 @@ class ToDoTextField extends StatelessWidget {
           controller: controller,
           obscureText: shouldObscureText,
           onChanged: onChanged,
+          maxLines: maxLine,
           decoration: InputDecoration(
             hintText: textHintLabel,
             hintStyle: const TextStyle(color: Colors.grey),

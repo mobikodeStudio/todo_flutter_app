@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import '../../core/common_consts.dart';
 import '../widgets/to_do_dropdown_button.dart';
 import '../widgets/to_do_due_date_time.dart';
 import '../widgets/to_do_primary_button.dart';
@@ -20,21 +21,12 @@ class AddTaskScreen extends StatefulWidget {
 class _AddTaskScreenState extends State<AddTaskScreen> {
   final TextEditingController taskController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
-  final List<String> categoryOptions = [
-    'Work',
-    'Personal',
-    'Shopping',
-    'Study',
-  ];
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: TextButton(
-          onPressed: () => Navigator.pop(context),
-          child: const Text("Cancel", style: TextStyle(color: Colors.blue)),
-        ),
         title: const Center(
           child: ToDoText(
             label: 'Add New Task',
@@ -43,16 +35,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
             fontSize: 15,
           ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              final taskTitle = taskController.text;
-              final description = descriptionController.text;
-              print("Saving Task: $taskTitle - $description");
-            },
-            child: const Text("Save", style: TextStyle(color: Colors.blue)),
-          ),
-        ],
+
       ),
       body: Padding(
         padding: const EdgeInsets.all(20.0),
@@ -104,6 +87,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                   controller: descriptionController,
                   textLabel: 'Description (Optional)',
                   textHintLabel: 'Add Task Details',
+                  maxLine: 3,
                   isSuffixIconVisible: false,
                   onChanged: (value) {
                     context.read<AddTaskScreenBloc>().add(

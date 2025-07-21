@@ -5,6 +5,8 @@ import 'package:todo_flutter_app/presentation/login/login_screen.dart';
 import 'package:todo_flutter_app/presentation/splash/splash_bloc.dart';
 
 import '../../core/injector.dart';
+import '../home_page/bloc/home_bloc.dart';
+import '../home_page/home_page.dart';
 import '../login/bloc/login_event.dart';
 
 class Splash extends StatelessWidget {
@@ -15,14 +17,28 @@ class Splash extends StatelessWidget {
     return  BlocListener<SplashBloc, SplashState>(
       listener: (context, state) {
         if (state is SplashOnLoadState) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => BlocProvider(
-                create: (context) => getIt<LoginBloc>()..add(OnSignInOnLoadEvent()),
-                child: const LoginPage (),
+          if(state.isUserLoggedIn){
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (context) => getIt<HomeBloc>(),
+                  child: const HomeScreen(),
+                ),
               ),
-            ),
-          );
+            );
+          }
+          else{
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (context) => getIt<LoginBloc>()..add(OnSignInOnLoadEvent()),
+                  child: const LoginPage (),
+                ),
+              ),
+            );
+          }
+
+
         }
       },
 
