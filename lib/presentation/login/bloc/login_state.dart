@@ -47,3 +47,12 @@ class OnSignUpOnClickState extends LoginState{
   List<Object?> get props => [];
 
 }
+class LoginSuccess extends LoginState {
+  LoginSuccess({required super.isBtnEnabled});
+} // ✅ NEW
+
+
+class LoginError extends LoginState { // ✅ NEW
+  final String error;
+  LoginError(this.error) : super(isBtnEnabled: false);
+}
