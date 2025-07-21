@@ -8,6 +8,8 @@ import 'package:todo_flutter_app/presentation/widgets/to_do_text_field.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_primary_button.dart';
 
 import '../../core/injector.dart';
+import '../home_page/bloc/home_bloc.dart';
+import '../home_page/home_page.dart';
 import '../login/bloc/login_bloc.dart';
 import '../login/bloc/login_event.dart';
 import '../login/login_screen.dart';
@@ -37,6 +39,14 @@ class _SignupScreenState extends State<SignupScreen> {
           if (state is SignupSuccess) {
             ScaffoldMessenger.of(context).showSnackBar(
               const SnackBar(content: Text('Signup Successful')),
+            );
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (context) => HomeBloc(),
+                  child: const HomeScreen(),
+                ),
+              ),
             );
           } else if (state is SignupError) {
             ScaffoldMessenger.of(context).showSnackBar(
@@ -144,7 +154,7 @@ class _SignupScreenState extends State<SignupScreen> {
                       final isEnabled = state is SignupValid;
                       return ToDoPrimaryButton(
                         label: 'Sign Up',
-                        isEnabled: isEnabled,
+                        isEnabled: true,
                         onPressed: () {
                           context.read<SignupBloc>().add(
                             SignupSubmitted(

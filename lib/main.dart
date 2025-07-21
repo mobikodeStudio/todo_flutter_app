@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_flutter_app/core/injector.dart';
 import 'package:todo_flutter_app/presentation/add_task/add_task.dart';
 import 'package:todo_flutter_app/presentation/add_task/add_task_bloc.dart';
+import 'package:todo_flutter_app/presentation/home_page/home_page.dart';
 import 'package:todo_flutter_app/presentation/login/bloc/login_bloc.dart';
 import 'package:todo_flutter_app/presentation/login/login_screen.dart';
 import 'package:todo_flutter_app/presentation/signup/bloc/signup_bloc.dart';
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
         create: (_) => getIt<SplashBloc>()..add(InitialSplashLOadEvent()),
         child: const Splash(),
       ),
+
     );
   }
 }

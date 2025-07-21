@@ -6,6 +6,8 @@ import 'package:todo_flutter_app/presentation/widgets/to_do_primary_button.dart'
 import 'package:todo_flutter_app/presentation/widgets/to_do_text.dart';
 import 'package:todo_flutter_app/presentation/widgets/to_do_text_field.dart';
 
+import '../home_page/bloc/home_bloc.dart';
+import '../home_page/home_page.dart';
 import '../signup/bloc/signup_bloc.dart';
 import '../signup/signup_screen.dart';
 import 'bloc/login_event.dart';
@@ -46,6 +48,25 @@ class _LoginPageState extends State<LoginPage> {
                   child: const SignupScreen(),
                 ),
               ),
+            );
+          }
+          else if (state is LoginSuccess) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Login Successful')),
+            );
+            Navigator.of(context).pushReplacement(
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (context) => HomeBloc(),
+                  child: const HomeScreen(),
+                ),
+              ),
+            );
+
+          }
+          if (state is LoginError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text(state.error)),
             );
           }
         },
