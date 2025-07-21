@@ -1,4 +1,5 @@
 abstract class SignupEvent {}
+class SignupInitialEvent extends SignupEvent {}
 
 class SignupSubmitted extends SignupEvent {
   final String name;
