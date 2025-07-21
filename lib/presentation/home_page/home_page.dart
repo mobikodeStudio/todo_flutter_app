@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_flutter_app/presentation/home_page/widgets/task_category_card.dart';
 import 'package:todo_flutter_app/presentation/home_page/widgets/tabbutton.dart';
+import '../../core/injector.dart';
+import '../add_task_screen/add_task_screen.dart';
+import '../add_task_screen/bloc/add_task_screen_bloc.dart';
 import '../home_page/bloc/home_bloc.dart';
 import '../home_page/bloc/home_event.dart';
 import '../home_page/bloc/home_state.dart';
@@ -48,27 +51,21 @@ class HomeScreen extends StatelessWidget {
                           text: 'Today',
                           isSelected: selectedIndex == 0,
                           onTap: () {
-                            context
-                                .read<HomeBloc>()
-                                .add(HomeTabChanged(0));
+                            context.read<HomeBloc>().add(HomeTabChanged(0));
                           },
                         ),
                         TabButton(
                           text: 'Important',
                           isSelected: selectedIndex == 1,
                           onTap: () {
-                            context
-                                .read<HomeBloc>()
-                                .add(HomeTabChanged(1));
+                            context.read<HomeBloc>().add(HomeTabChanged(1));
                           },
                         ),
                         TabButton(
                           text: 'Upcoming',
                           isSelected: selectedIndex == 2,
                           onTap: () {
-                            context
-                                .read<HomeBloc>()
-                                .add(HomeTabChanged(2));
+                            context.read<HomeBloc>().add(HomeTabChanged(2));
                           },
                         ),
                       ],
@@ -77,7 +74,6 @@ class HomeScreen extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 32),
-
 
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -112,45 +108,48 @@ class HomeScreen extends StatelessWidget {
                       icon: Icons.favorite,
                       backgroundColor: Colors.red,
                     ),
-
                   ],
                 ),
                 const SizedBox(height: 20),
                 Expanded(
-                 child: BlocBuilder<HomeBloc, HomeState>(
-                  builder: (context, state) {
-                    if (state is HomeLoadedState) {
-                      final tasks = state.tasks;
+                  child: BlocBuilder<HomeBloc, HomeState>(
+                    builder: (context, state) {
+                      if (state is HomeLoadedState) {
+                        final tasks = state.tasks;
 
-                      return ListView.builder(
-                        itemCount: tasks.length,
-                        itemBuilder: (context, index) {
-                          final task = tasks[index];
-                          return ListTile(
-                            title: Text(
-                              task['title'],
-                              style: TextStyle(
-                                decoration: task['isCompleted']
-                                    ? TextDecoration.lineThrough
-                                    : null,
-                                color: task['isCompleted'] ? Colors.grey : Colors.black,
+                        return ListView.builder(
+                          itemCount: tasks.length,
+                          itemBuilder: (context, index) {
+                            final task = tasks[index];
+                            return ListTile(
+                              title: Text(
+                                task['title'],
+                                style: TextStyle(
+                                  decoration: task['isCompleted']
+                                      ? TextDecoration.lineThrough
+                                      : null,
+                                  color: task['isCompleted']
+                                      ? Colors.grey
+                                      : Colors.black,
+                                ),
                               ),
-                            ),
-                            subtitle: Text(task['time']),
-                            trailing: task['isImportant']
-                                ? const Icon(Icons.star, color: Colors.blue)
-                                : null,
-                            onTap: () {
-                              context.read<HomeBloc>().add(ToggleTaskStatus( index));
-                            },
-                          );
-                        },
-                      );
-                    } else {
-                      return const Center(child: CircularProgressIndicator());
-                    }
-                  },
-                ),
+                              subtitle: Text(task['time']),
+                              trailing: task['isImportant']
+                                  ? const Icon(Icons.star, color: Colors.blue)
+                                  : null,
+                              onTap: () {
+                                context.read<HomeBloc>().add(
+                                  ToggleTaskStatus(index),
+                                );
+                              },
+                            );
+                          },
+                        );
+                      } else {
+                        return const Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
@@ -194,7 +193,14 @@ class HomeScreen extends StatelessWidget {
         //
         floatingActionButton: FloatingActionButton(
           onPressed: () {
-            // Add your navigation to AddTaskScreen here
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => BlocProvider(
+                  create: (context) => getIt<AddTaskScreenBloc>(),
+                  child: const AddTaskScreen(),
+                ),
+              ),
+            );
           },
           backgroundColor: Colors.blue,
           shape: const CircleBorder(),
@@ -205,4 +211,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
