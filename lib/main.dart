@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todo_flutter_app/core/injector.dart';
+import 'package:todo_flutter_app/presentation/calendar/bloc/calendar_bloc.dart';
+import 'package:todo_flutter_app/presentation/calendar/bloc/calendar_event.dart';
+import 'package:todo_flutter_app/presentation/calendar/calendar_screen.dart';
+import 'package:todo_flutter_app/presentation/settings/bloc/settings_bloc.dart';
+import 'package:todo_flutter_app/presentation/settings/bloc/settings_event.dart';
+import 'package:todo_flutter_app/presentation/settings/settings_screen.dart';
 import 'package:todo_flutter_app/presentation/splash/splash_bloc.dart';
 import 'package:todo_flutter_app/presentation/splash/splash_screen.dart';
 
@@ -20,7 +26,7 @@ class MyApp extends StatelessWidget {
       // Wrapping SignupScreen with BlocProvider
       home: BlocProvider(
         create: (_) => getIt<SplashBloc>()..add(InitialSplashLOadEvent()),
-        child: const Splash(),
+        child: const   Splash()
       ),
     );
   }
