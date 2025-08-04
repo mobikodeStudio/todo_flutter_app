@@ -17,11 +17,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Todo Bloc App',
       theme: ThemeData(primarySwatch: Colors.blue),
-      // Wrapping SignupScreen with BlocProvider
 
+      // Wrapping SignupScreen with BlocProvider
       home: BlocProvider(
         create: (_) => getIt<SplashBloc>()..add(InitialSplashLOadEvent()),
-        child: const   Splash()
+        child: const Splash(),
       ),
     );
   }

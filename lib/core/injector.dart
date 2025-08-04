@@ -21,7 +21,4 @@ void serviceInjector() {
   getIt.registerFactory(() => AnalyticsBloc());
   getIt.registerFactory(() => CalendarBloc());
   getIt.registerFactory(() => SettingsBloc());
-
-
-
 }
